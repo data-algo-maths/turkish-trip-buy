@@ -1,6 +1,99 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ff5a36"><title>Turkish Trip Buy Admin</title><link rel="stylesheet" href="role.css"></head><body>
-<div class="shell"><header class="topbar"><a class="brand" href="index.html"><span class="mark">T</span><span>Turkish Trip Buy</span></a><span class="role-tag">Admin</span><div class="top-actions"><span class="online-pill online"><i></i><span>API connected</span></span><a class="link-button" href="#investorResources">Investor files</a><a class="link-button" href="index.html">Customer</a><a class="link-button" href="rider.html">Driver</a><a class="primary-button" id="dailyReport" href="#">Download report</a></div></header>
-<main class="page"><header class="page-head"><div><p class="eyebrow">DISPATCH & OPERATIONS</p><h1>Delivery control room</h1></div><p class="subtle" id="lastUpdated">Loading live data…</p></header>
-<section class="kpis"><article class="card kpi"><span>Orders today</span><b id="ordersKpi">0</b><small>All demo orders</small></article><article class="card kpi"><span>Open deliveries</span><b id="openKpi">0</b><small>Awaiting completion</small></article><article class="card kpi"><span>Riders online</span><b id="ridersKpi">0</b><small>Available or busy</small></article><article class="card kpi"><span>Revenue today</span><b id="revenueKpi">₹0</b><small>Mock approved</small></article></section>
-<section class="grid"><article class="card"><div class="card-head"><h2>Dispatch queue</h2><button class="ghost-button" id="refresh">Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>ETA</th><th>Total</th><th>Assignment</th></tr></thead><tbody id="dispatchTable"></tbody></table></div></article><article class="card"><div class="card-head"><h2>Driver fleet</h2><a class="link-button" href="rider.html">Open driver app</a></div><div class="rider-list" id="riderList"></div></article><article class="card live-map-card"><div class="card-head"><h2>Live driver map</h2></div><div id="adminMap" class="admin-map demo-map"></div></article><article class="card investor-library" id="investorResources"><div class="card-head"><div><p class="eyebrow">INVESTOR MATERIALS</p><h2>Delhi NCR planning files</h2></div></div><div class="document-grid"><article class="document-tile"><img src="assets/investor/deck-cover.png" alt="Cover of the Delhi NCR investor and rider PowerPoint deck"><div><b>Investor and rider deck</b><small>PowerPoint · 19 slides · 2.1 MB</small><p>Four locations, rider visibility and the six-month sales outlook.</p><a class="primary-button" href="assets/investor/delhi-ncr-investor-rider-deck.pptx" download>Download PowerPoint</a></div></article><article class="document-tile"><img src="assets/investor/heatmap-cover.png" alt="Cover of the Delhi NCR four-unit investor heatmap PDF"><div><b>Four-unit heatmap views</b><small>PDF · 7 pages · 1.4 MB</small><p>Investor heatmaps and developer concept views for the Delhi NCR units.</p><div class="document-actions"><a class="primary-button" href="assets/investor/delhi-ncr-investor-heatmap.pdf" target="_blank" rel="noopener">Open PDF</a><a class="link-button" href="assets/investor/delhi-ncr-investor-heatmap.pdf" download>Download</a></div></div></article></div></article><article class="card"><div class="card-head"><h2>Notification feed</h2></div><div class="event-list" id="eventList"></div></article><article class="card"><div class="card-head"><h2>Dispatch rules</h2></div><p class="subtle">Only online drivers can receive work. A driver can hold one active delivery. Reassignment releases the previous driver. Completing a delivery returns the driver to online status.</p><button class="danger-button" id="testNotice">Queue test notification</button></article></section>
-</main></div><div class="toast" id="toast"></div><script src="mobile-bridge.js"></script><script src="runtime.js"></script><script src="admin.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ff5a36">
+  <title>Turkish Trip Buy Admin</title>
+  <link rel="stylesheet" href="role.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="mark">T</span><span>Turkish Trip Buy</span></a>
+      <span class="role-tag">Admin</span>
+      <div class="top-actions">
+        <span class="online-pill online" id="dataMode"><i></i><span>Demo dataset</span></span>
+        <a class="link-button" href="#demandHeatmap">Demand heat map</a>
+        <a class="link-button" href="index.html">Customer</a>
+        <a class="link-button" href="rider.html">Driver</a>
+        <a class="primary-button" id="dailyReport" href="#">Download report</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <header class="page-head">
+        <div><p class="eyebrow">DISPATCH & OPERATIONS</p><h1>Delivery control room</h1></div>
+        <p class="subtle" id="lastUpdated">Loading operations data…</p>
+      </header>
+
+      <section class="kpis">
+        <article class="card kpi"><span>Orders today</span><b id="ordersKpi">0</b><small>Across Delhi NCR</small></article>
+        <article class="card kpi"><span>Open deliveries</span><b id="openKpi">0</b><small>Awaiting completion</small></article>
+        <article class="card kpi"><span>Riders online</span><b id="ridersKpi">0</b><small>Available or busy</small></article>
+        <article class="card kpi"><span>Revenue today</span><b id="revenueKpi">₹0</b><small>Prototype estimate</small></article>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <div class="card-head"><h2>Dispatch queue</h2><button class="ghost-button" id="refresh">Refresh</button></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>ETA</th><th>Total</th><th>Assignment</th></tr></thead>
+              <tbody id="dispatchTable"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h2>Driver fleet</h2><a class="link-button" href="rider.html">Open driver app</a></div>
+          <div class="rider-list" id="riderList"></div>
+        </article>
+
+        <article class="card live-map-card">
+          <div class="card-head"><div><p class="eyebrow">LIVE COVERAGE</p><h2>Driver positions</h2></div><span class="map-time">Demo · updated now</span></div>
+          <div id="adminMap" class="admin-map operations-map" aria-label="Demo driver coverage map">
+            <span class="map-road road-one"></span><span class="map-road road-two"></span><span class="map-road road-three"></span>
+            <span class="driver-pin pin-one">A</span><span class="driver-pin pin-two">R</span><span class="driver-pin pin-three">K</span>
+            <span class="kitchen-pin">T</span>
+          </div>
+        </article>
+
+        <article class="card heatmap-card" id="demandHeatmap">
+          <div class="card-head"><div><p class="eyebrow">DEMAND INTELLIGENCE</p><h2>Delhi NCR order heat map</h2></div><span class="forecast-pill">Next 30 minutes</span></div>
+          <div class="heatmap-layout">
+            <div class="demand-map" aria-label="Dummy demand heat map for Delhi NCR">
+              <span class="map-axis axis-a"></span><span class="map-axis axis-b"></span><span class="map-axis axis-c"></span>
+              <button class="heat-spot critical" style="--x:43%;--y:29%;--size:106px" aria-label="Connaught Place demand 92 percent"><b>92%</b><small>CP</small></button>
+              <button class="heat-spot high" style="--x:22%;--y:66%;--size:92px" aria-label="Gurugram Cyber Hub demand 84 percent"><b>84%</b><small>Cyber Hub</small></button>
+              <button class="heat-spot warm" style="--x:72%;--y:48%;--size:78px" aria-label="Noida Sector 18 demand 73 percent"><b>73%</b><small>Noida 18</small></button>
+              <button class="heat-spot medium" style="--x:49%;--y:76%;--size:66px" aria-label="Saket demand 61 percent"><b>61%</b><small>Saket</small></button>
+              <div class="heat-legend"><span><i class="low"></i>Low</span><span><i class="med"></i>Medium</span><span><i class="hot"></i>High</span></div>
+            </div>
+            <div class="zone-list">
+              <div class="zone-row"><div><b>Connaught Place</b><small>18 predicted orders</small></div><span>92%</span><i><em style="width:92%"></em></i></div>
+              <div class="zone-row"><div><b>Gurugram Cyber Hub</b><small>15 predicted orders</small></div><span>84%</span><i><em style="width:84%"></em></i></div>
+              <div class="zone-row"><div><b>Noida Sector 18</b><small>11 predicted orders</small></div><span>73%</span><i><em style="width:73%"></em></i></div>
+              <div class="zone-row"><div><b>Saket</b><small>8 predicted orders</small></div><span>61%</span><i><em style="width:61%"></em></i></div>
+              <div class="heat-note"><b>Suggested action</b><p>Move two available riders toward Connaught Place before the projected lunch spike.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h2>Notification feed</h2><span class="forecast-pill">Safe demo</span></div>
+          <div class="event-list" id="eventList"></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h2>Dispatch rules</h2></div>
+          <p class="subtle">Only online drivers can receive work. A driver can hold one active delivery. Completing a delivery returns the driver to online status.</p>
+          <button class="danger-button" id="testNotice">Add test notification</button>
+        </article>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="mobile-bridge.js"></script><script src="runtime.js"></script><script src="admin.js"></script>
+</body>
+</html>
