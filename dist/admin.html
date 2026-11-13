@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#ff5a36">
   <title>Turkish Trip Buy Admin</title>
-  <link rel="stylesheet" href="role.css">
+  <link rel="stylesheet" href="role.css?v=4">
 </head>
 <body>
   <div class="shell">
@@ -51,33 +51,42 @@
         </article>
 
         <article class="card live-map-card">
-          <div class="card-head"><div><p class="eyebrow">LIVE COVERAGE</p><h2>Driver positions</h2></div><span class="map-time">Demo · updated now</span></div>
+          <div class="card-head"><div><p class="eyebrow">LIVE COVERAGE</p><h2>Driver positions</h2></div><span class="map-time" id="mapTime">Demo · updated now</span></div>
           <div id="adminMap" class="admin-map operations-map" aria-label="Demo driver coverage map">
             <span class="map-road road-one"></span><span class="map-road road-two"></span><span class="map-road road-three"></span>
-            <span class="driver-pin pin-one">A</span><span class="driver-pin pin-two">R</span><span class="driver-pin pin-three">K</span>
-            <span class="kitchen-pin">T</span>
+            <div id="driverPins"></div>
           </div>
         </article>
 
+        <article class="card trend-card">
+          <div class="card-head"><div><p class="eyebrow">LAST 7 DAYS</p><h2>Orders &amp; revenue</h2></div><span class="forecast-pill" id="trendTotal">—</span></div>
+          <div id="trendChart" class="trend-chart" aria-label="Orders and revenue over the last seven days"></div>
+          <div class="trend-legend"><span><i class="bar"></i>Orders</span><span><i class="line"></i>Revenue</span></div>
+        </article>
+
         <article class="card heatmap-card" id="demandHeatmap">
-          <div class="card-head"><div><p class="eyebrow">DEMAND INTELLIGENCE</p><h2>Delhi NCR order heat map</h2></div><span class="forecast-pill">Next 30 minutes</span></div>
+          <div class="card-head"><div><p class="eyebrow">DEMAND INTELLIGENCE</p><h2>Delhi NCR order heat map</h2></div>
+            <div class="seg" id="windowTabs" role="tablist">
+              <button data-window="now">Now</button><button data-window="30m" class="active">Next 30 min</button><button data-window="2h">Next 2 hrs</button>
+            </div>
+          </div>
           <div class="heatmap-layout">
-            <div class="demand-map" aria-label="Dummy demand heat map for Delhi NCR">
+            <div class="demand-map" id="demandMap" aria-label="Dummy demand heat map for Delhi NCR">
               <span class="map-axis axis-a"></span><span class="map-axis axis-b"></span><span class="map-axis axis-c"></span>
-              <button class="heat-spot critical" style="--x:43%;--y:29%;--size:106px" aria-label="Connaught Place demand 92 percent"><b>92%</b><small>CP</small></button>
-              <button class="heat-spot high" style="--x:22%;--y:66%;--size:92px" aria-label="Gurugram Cyber Hub demand 84 percent"><b>84%</b><small>Cyber Hub</small></button>
-              <button class="heat-spot warm" style="--x:72%;--y:48%;--size:78px" aria-label="Noida Sector 18 demand 73 percent"><b>73%</b><small>Noida 18</small></button>
-              <button class="heat-spot medium" style="--x:49%;--y:76%;--size:66px" aria-label="Saket demand 61 percent"><b>61%</b><small>Saket</small></button>
+              <div id="heatSpots"></div>
               <div class="heat-legend"><span><i class="low"></i>Low</span><span><i class="med"></i>Medium</span><span><i class="hot"></i>High</span></div>
             </div>
             <div class="zone-list">
-              <div class="zone-row"><div><b>Connaught Place</b><small>18 predicted orders</small></div><span>92%</span><i><em style="width:92%"></em></i></div>
-              <div class="zone-row"><div><b>Gurugram Cyber Hub</b><small>15 predicted orders</small></div><span>84%</span><i><em style="width:84%"></em></i></div>
-              <div class="zone-row"><div><b>Noida Sector 18</b><small>11 predicted orders</small></div><span>73%</span><i><em style="width:73%"></em></i></div>
-              <div class="zone-row"><div><b>Saket</b><small>8 predicted orders</small></div><span>61%</span><i><em style="width:61%"></em></i></div>
-              <div class="heat-note"><b>Suggested action</b><p>Move two available riders toward Connaught Place before the projected lunch spike.</p></div>
+              <div id="zoneRows"></div>
+              <div class="heat-note"><b>Suggested action</b><p id="heatAction">Calculating…</p></div>
             </div>
           </div>
+        </article>
+
+        <article class="card weekly-card">
+          <div class="card-head"><div><p class="eyebrow">DEMAND PATTERN</p><h2>Orders by day &amp; hour</h2></div><span class="forecast-pill">Last 4 weeks · avg orders</span></div>
+          <div class="weekly-wrap"><div id="weeklyHeatmap" class="weekly-grid"></div></div>
+          <div class="weekly-scale"><span>Fewer</span><i></i><span>More</span></div>
         </article>
 
         <article class="card">
@@ -94,6 +103,6 @@
     </main>
   </div>
   <div class="toast" id="toast"></div>
-  <script src="mobile-bridge.js"></script><script src="runtime.js"></script><script src="admin.js"></script>
+  <script src="mobile-bridge.js"></script><script src="runtime.js"></script><script src="admin.js?v=4"></script>
 </body>
 </html>
