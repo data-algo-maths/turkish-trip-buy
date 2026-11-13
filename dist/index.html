@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ff5a36" />
+  <meta name="description" content="Turkish Trip Buy — a fast food delivery prototype." />
+  <title>Turkish Trip Buy — hot food, here fast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Turkish Trip Buy home">
+        <span class="brand-mark">T</span><span>Turkish Trip Buy</span>
+      </a>
+      <button class="location-button" id="locationButton" aria-label="Change delivery address">
+        <span class="pin">●</span>
+        <span><small>DELIVERING TO</small><strong id="locationLabel">Home · Carlton</strong></span>
+        <span>⌄</span>
+      </button>
+      <nav class="nav-actions" aria-label="Primary navigation">
+        <button class="nav-link" data-toast="Offers are already applied to eligible items">Offers</button>
+        <button class="nav-link" id="ordersButton">Orders</button>
+        <button class="nav-link" id="riderButton">Rider</button>
+        <button class="nav-link" id="adminButton">Admin</button>
+        <button class="profile-button" aria-label="Profile">KY</button>
+        <button class="cart-button" id="cartButton" aria-label="Open cart">
+          <span>Bag</span><strong id="cartCount">0</strong>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> Delivered in 10 minutes</div>
+          <h1>Big flavour.<br><em>Zero waiting.</em></h1>
+          <p>Freshly made favourites, racing from our kitchen to your door.</p>
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="Search bowls, wraps, drinks…" autocomplete="off" />
+            <kbd>⌘ K</kbd>
+          </label>
+          <div class="hero-proof">
+            <span><b>4.8</b> ★ average rating</span>
+            <i></i>
+            <span><b>10k+</b> happy foodies</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration of a fresh paneer rice bowl">
+          <div class="speed-pill">⚡ 8 min prep</div>
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="plate">
+            <div class="bowl-art">
+              <span class="rice"></span><span class="paneer p1"></span><span class="paneer p2"></span>
+              <span class="paneer p3"></span><span class="leaf l1"></span><span class="leaf l2"></span>
+              <span class="tomato t1"></span><span class="tomato t2"></span><span class="sauce"></span>
+            </div>
+          </div>
+          <div class="fresh-card"><b>Made fresh</b><span>Not sitting on a shelf</span></div>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="menu">
+        <div class="section-heading">
+          <div><p class="overline">WHAT ARE YOU CRAVING?</p><h2>Fast favourites</h2></div>
+          <div class="filter-toggle">
+            <label><input type="checkbox" id="vegOnly" /><span class="veg-icon">●</span> Veg only</label>
+            <label><input type="checkbox" id="quickOnly" /> Under 10 min</label>
+          </div>
+        </div>
+        <div class="category-row" id="categories"></div>
+        <div class="product-grid" id="productGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <span>⌕</span><h3>No bites found</h3><p>Try another search or clear your filters.</p>
+          <button id="clearFilters">Clear filters</button>
+        </div>
+      </section>
+
+      <section class="promise-strip">
+        <article><span>01</span><div><b>Cooked when you order</b><p>Every meal starts fresh.</p></div></article>
+        <article><span>02</span><div><b>10-minute delivery</b><p>Our kitchens are close by.</p></div></article>
+        <article><span>03</span><div><b>Quality, guaranteed</b><p>Love it or we make it right.</p></div></article>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="drawer cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Shopping cart">
+    <div class="drawer-head"><div><p class="overline">YOUR ORDER</p><h2>Bag <span id="drawerCount">0 items</span></h2></div><button class="close-button" data-close>×</button></div>
+    <div class="delivery-clock"><span>⚡</span><div><b>Delivery in 10–14 min</b><p>Order now to keep this estimate</p></div></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="empty-cart" id="emptyCart"><div>🛍️</div><h3>Your bag is hungry</h3><p>Add something delicious from the menu.</p><button data-close>Explore menu</button></div>
+    <div class="cart-summary" id="cartSummary" hidden>
+      <button class="promo-row" id="promoButton"><span>⌁</span><b id="promoText">Apply promo code</b><span>›</span></button>
+      <div class="bill"><p><span>Subtotal</span><b id="subtotal">₹0</b></p><p><span>Delivery fee</span><b class="free">FREE</b></p><p id="discountRow" hidden><span>FAST50</span><b class="discount" id="discount">−₹0</b></p><p class="total"><span>Total</span><b id="total">₹0</b></p></div>
+      <button class="primary-button" id="checkoutButton"><span>Checkout</span><b id="checkoutTotal">₹0</b></button>
+    </div>
+  </aside>
+
+  <section class="modal product-modal" id="productModal" aria-hidden="true" aria-label="Customise item">
+    <button class="close-button modal-close" data-close>×</button>
+    <div class="modal-food" id="modalFood"></div>
+    <div class="modal-body">
+      <div class="item-meta"><span id="modalVeg">VEG</span><span id="modalTime">8 MIN</span></div>
+      <h2 id="modalName"></h2><p id="modalDescription"></p>
+      <fieldset><legend>Choose your spice level <small>REQUIRED</small></legend>
+        <label><input type="radio" name="spice" value="Mild" checked><span>Mild</span></label>
+        <label><input type="radio" name="spice" value="Medium"><span>Medium</span></label>
+        <label><input type="radio" name="spice" value="Hot"><span>Hot</span></label>
+      </fieldset>
+      <label class="addon"><input type="checkbox" id="extraPaneer"><span><b>Add extra paneer</b><small>+ ₹49</small></span><i>＋</i></label>
+      <div class="modal-action"><div class="stepper"><button id="modalMinus">−</button><b id="modalQty">1</b><button id="modalPlus">＋</button></div><button class="primary-button" id="addConfigured"><span>Add to bag</span><b id="modalPrice">₹0</b></button></div>
+    </div>
+  </section>
+
+  <section class="modal checkout-modal" id="checkoutModal" aria-hidden="true" aria-label="Checkout">
+    <button class="close-button modal-close" data-close>×</button>
+    <div class="checkout-head"><p class="overline">ALMOST THERE</p><h2>Confirm your order</h2><p>Delivery in 10–14 minutes</p></div>
+    <div class="checkout-body">
+      <h3>Deliver to</h3>
+      <button class="address-card selected"><span>⌂</span><span><b>Home</b><small>145 Lygon Street, Carlton VIC</small></span><i>✓</i></button>
+      <h3>Payment</h3>
+      <button class="address-card selected payment-choice" data-payment="stripe"><span>◈</span><span><b>Stripe test card / Google Pay</b><small>Native PaymentSheet in the Customer APK</small></span><i>✓</i></button>
+      <button class="address-card payment-choice" data-payment="cod"><span>⌂</span><span><b>Cash on delivery</b><small>No online payment required</small></span><i></i></button>
+      <div class="checkout-note">Stripe remains in test mode until live merchant approval. Card details are handled by Stripe and are never stored by Turkish Trip Buy.</div>
+      <button class="primary-button place-order" id="placeOrder"><span>Pay & place order</span><b id="placeOrderTotal">₹0</b></button>
+    </div>
+  </section>
+
+  <section class="order-screen" id="orderScreen" hidden>
+    <div class="order-panel">
+      <button class="close-button" id="closeOrder">×</button>
+      <div class="order-success">✓</div><p class="overline">ORDER #SB1042</p><h2>Your food is on the move</h2><p class="eta"><b id="etaNumber">10</b><span>MIN<br>AWAY</span></p>
+      <div class="route"><span class="kitchen">T</span><div class="route-line"><i id="routeProgress"></i><b id="riderDot">●</b></div><span class="home">⌂</span></div>
+      <div class="tracking-map demo-map" id="customerMap" aria-label="Live delivery map"></div>
+      <div class="timeline" id="timeline">
+        <article class="active"><i>✓</i><div><b>Order confirmed</b><span>We’ve received your order</span></div></article>
+        <article><i>2</i><div><b>Cooking your food</b><span>Our kitchen is working its magic</span></div></article>
+        <article><i>3</i><div><b>Out for delivery</b><span>Your rider is heading your way</span></div></article>
+        <article><i>4</i><div><b>Delivered</b><span>Time to dig in</span></div></article>
+      </div>
+      <div class="rider-card"><div class="rider-avatar" id="customerRiderAvatar">?</div><div><small>YOUR RIDER</small><b id="customerRiderName">Waiting for assignment</b><span id="customerRiderMeta">The dispatcher is finding a rider</span></div><button data-toast="Calling is disabled in this prototype">☎</button></div>
+      <button class="secondary-button" id="advanceOrder">Advance demo tracking</button>
+    </div>
+  </section>
+
+  <section class="admin-screen" id="adminScreen" hidden>
+    <header class="admin-topbar">
+      <div><p class="overline">TURKISH TRIP BUY CONTROL ROOM</p><h2>Live operations</h2></div>
+      <div class="admin-actions"><span class="api-status" id="apiStatus">Checking API…</span><button class="secondary-button" id="testNotification">Test notification</button><a class="download-button" id="dailyReport" href="#">Download daily report</a><button class="close-button" id="closeAdmin">×</button></div>
+    </header>
+    <main class="admin-content">
+      <div class="admin-note">Live demo data is stored in SQLite. Payment is mocked and external messages remain in the safe notification outbox.</div>
+      <section class="kpi-grid">
+        <article><span>Orders today</span><b id="kpiOrders">0</b><small>All demo orders</small></article>
+        <article><span>Revenue today</span><b id="kpiRevenue">₹0</b><small>Mock-approved orders</small></article>
+        <article><span>Average order</span><b id="kpiAov">₹0</b><small>Revenue ÷ orders</small></article>
+        <article><span>Open orders</span><b id="kpiOpen">0</b><small>Not yet delivered</small></article>
+      </section>
+      <section class="admin-grid">
+        <article class="admin-card orders-card"><div class="admin-card-head"><div><p class="overline">ORDER FEED</p><h3>Recent orders</h3></div><button id="refreshAdmin">Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Order</th><th>Created</th><th>Status</th><th>Total</th><th>ETA</th></tr></thead><tbody id="ordersTable"></tbody></table></div></article>
+        <article class="admin-card"><div class="admin-card-head"><div><p class="overline">POPULAR TODAY</p><h3>Top products</h3></div></div><div id="topProducts" class="bar-list"></div></article>
+        <article class="admin-card notifications-card"><div class="admin-card-head"><div><p class="overline">SAFE OUTBOX</p><h3>Notifications</h3></div></div><div id="notificationFeed" class="notification-feed"></div></article>
+        <article class="admin-card integration-card"><div class="admin-card-head"><div><p class="overline">INTEGRATIONS</p><h3>Connection readiness</h3></div></div><div class="integration-list"><p><span class="ready-dot live"></span><b>Orders database</b><small>SQLite connected</small></p><p><span class="ready-dot live"></span><b>Browser notifications</b><small>Ready for permission</small></p><p><span class="ready-dot"></span><b>Maps and routing</b><small>API key required</small></p><p><span class="ready-dot"></span><b>SMS / WhatsApp</b><small>Provider choice required</small></p><p><span class="ready-dot mock"></span><b>Payments</b><small>Mock mode</small></p></div></article>
+      </section>
+    </main>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="mobile-bridge.js"></script><script src="runtime.js"></script><script src="app.js"></script>
+</body>
+</html>
